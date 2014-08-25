@@ -3,7 +3,7 @@ phing-task-tao
 
 set of phing tasks to deploy tao
 
-   <taoinstall taoPath="${src.dir.resolved}" >
+  <taoinstall taoPath="${src.dir.resolved}" >
 	      	<taoConfig 	
 	      		login="${user.login}"
 	      		pass="${user.pass}">
@@ -23,4 +23,4 @@ set of phing tasks to deploy tao
 	      		extensions="${extensions_list}"
 	      	/>
 	      	</taoConfig>
-    </taoinstall>
+  </taoinstall>
