@@ -3,6 +3,10 @@ phing-task-tao
 
 set of phing tasks to deploy tao
 
+	<taskdef name="taoinstall" classname="InstallTaoTask" />
+	<typedef name="taoDbConfig" classname="TaoDbConfig" />
+	<typedef name="generisConfig" classname="GenerisConfig" />
+	<typedef name="taoConfig" classname="TaoConfig" />
 	<taoinstall taoPath="${src.dir.resolved}" >
 		<taoConfig 	
 	      		login="${user.login}"
