@@ -8,8 +8,8 @@ class InstallTaoTask extends Task {
  /**
      * The message passed in the buildfile.
      */
-    private $taoPath = null;
-    private $taoconfig;
+    private $taoPath;
+    private $taoConfig;
 
     /**
      * The setter for the attribute "message"
@@ -42,7 +42,7 @@ class InstallTaoTask extends Task {
     private function install(){
     	$installPath = $this->taoPath. '/tao/install/init.php';
         if (!is_file($installPath)) {
-    		throw new Exception("InstallTaoTask require a tao package install should be found ".$autoloadPath);
+    		throw new Exception("InstallTaoTask require a tao package install should be found ".$installPath);
     	}
     	require_once $installPath;
 
