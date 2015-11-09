@@ -69,6 +69,7 @@ class CreateDbTask extends Task
         if ($command) {
             $execTask->setCommand($command);
             $execTask->main();
+            $this->log(sprintf('Database %s has been created', $this->taoDbConfig->getDbName()));
         }
 
     }

@@ -43,6 +43,7 @@ class BackupDbTask extends Task
         $command  = null;
         $execTask = new ExecTask();
         $execTask->setProject($this->getProject());
+        $backupPath = $this->dir . DIRECTORY_SEPARATOR . $this->taoDbConfig->getDbName() . '.gz';
 
         switch ($this->taoDbConfig->getDbDriver()) {
             case 'pdo_pgsql':
@@ -51,7 +52,7 @@ class BackupDbTask extends Task
                         $this->taoDbConfig->getDbHost(),
                         $this->taoDbConfig->getDbUser(),
                         $this->taoDbConfig->getDbName(),
-                        $this->dir . DIRECTORY_SEPARATOR . $this->taoDbConfig->getDbName() . '.gz',
+                        $backupPath,
                     ]);
 
                 break;
@@ -62,7 +63,7 @@ class BackupDbTask extends Task
                         $this->taoDbConfig->getDbUser(),
                         $this->taoDbConfig->getDbPass(),
                         $this->taoDbConfig->getDbName(),
-                        $this->dir . DIRECTORY_SEPARATOR . $this->taoDbConfig->getDbName() . '.gz',
+                        $backupPath,
                     ]);
                 break;
             default:
@@ -72,6 +73,7 @@ class BackupDbTask extends Task
         if ($command) {
             $execTask->setCommand($command);
             $execTask->main();
+            $this->log(sprintf('Backup for %s created at %s', $this->taoDbConfig->getDbName(), $backupPath));
         }
 
     }
