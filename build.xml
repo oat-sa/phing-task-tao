@@ -1,12 +1,17 @@
 <?xml version="1.0" ?>
 <project name="taoinstall" basedir="." default="test.install">
     <property file="../../build.properties" />
+    <property file="../../db.local.properties" />
 
-    <taskdef name="taoinstall" classname="task/InstallTaoTask" />
-    <typedef name="taoDbConfig" classname="task/TaoDbConfig" />
-    <typedef name="generisConfig" classname="task/GenerisConfig" />
-    <typedef name="taoConfig" classname="task/TaoConfig" />
+    <taskdef name="taoinstall" classname="InstallTaoTask" />
+    <typedef name="taoDbConfig" classname="TaoDbConfig" />
+    <typedef name="generisConfig" classname="GenerisConfig" />
+    <typedef name="taoConfig" classname="TaoConfig" />
 
+	<exec command="if [ -f '${basedir.resolved}/config/generis.conf.php' ]; then echo 'true'; else echo 'false'; fi;" outputProperty="tao.is_installed" />
+
+	<taoDbConfig id="maindb" taoInstalled="${tao.is_installed}" taoPath="${basedir.resolved}" dbDriver="${db.driver}"
+				 dbHost="${db.host}" dbPass="${db.pass}" dbUser="${db.user}" dbName="${db.prefix}${buildstamp}${package.name}"/>
 
     <resolvepath propertyName="src.dir.resolved" file="../src" />
 
@@ -15,13 +20,7 @@
       	<taoConfig 	
       		login="${user.login}"
       		pass="${user.pass}">
-      	<taoDbConfig 
-      		dbDriver="${db.driver}" 
-      		dbHost="${db.host}"
-      		dbUser="${db.user}"
-      		dbPass="${db.pass}"
-      		dbName="${db.name}"
-      	/>
+      	<taoDbConfig refid="maindb"/>
       	<generisConfig       		
       		instanceName="${module.name}"
       		moduleUrl="${module.url}"

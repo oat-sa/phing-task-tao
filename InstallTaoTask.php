@@ -26,10 +26,8 @@ class InstallTaoTask extends Task {
         // nothing to do here
     }
 
-    public function createTaoConfig(){
-    	$this->taoConfig = new TaoConfig();
-
-    	return $this->taoConfig;
+    public function addTaoConfig(TaoConfig $config){
+    	$this->taoConfig = $config;
     }
 
     /**
@@ -40,7 +38,8 @@ class InstallTaoTask extends Task {
     }
 
     private function install(){
-    	$installPath = $this->taoPath. '/tao/install/init.php';
+
+       $installPath = $this->taoPath. '/tao/install/init.php';
         if (!is_file($installPath)) {
     		throw new Exception("InstallTaoTask require a tao package install should be found ".$installPath);
     	}
