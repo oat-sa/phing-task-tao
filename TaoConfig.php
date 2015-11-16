@@ -2,48 +2,57 @@
 
 require_once "phing/types/DataType.php";
 
-class TaoConfig extends DataType {
+class TaoConfig extends DataType
+{
+    /**
+     * @var generisConfig
+     */
+    private $taoDbConfig;
+    /**
+     * @var TaoDbConfig
+     */
+    private $generisConfig;
 
-	private $taoDbConfig;
-	private $generisConfig;
+    private $login;
+    private $pass;
 
-	private $login;
-	private $pass;
+    public function addGenerisConfig(generisConfig $generisConfig)
+    {
+        $this->generisConfig = $generisConfig;
+    }
 
-	public function createGenerisConfig(){
-		$this->generisConfig = new generisConfig();
-		return $this->generisConfig;
-	}
-
-	public function createTaoDbConfig(){
-		$this->taoDbConfig = new TaoDbConfig();
-		return $this->taoDbConfig;
-	}
-
-
-
-	public function setLogin($login){
-		$this->login = $login;
-	}
-	public function setPass($pass){
-		$this->pass = $pass;
-	}
+    public function addTaoDbConfig(TaoDbConfig $taoDbConfig)
+    {
+        $this->taoDbConfig = $taoDbConfig;
+    }
 
 
-	public function toArray(){
+    public function setLogin($login)
+    {
+        $this->login = $login;
+    }
 
-		$returnValue = array(
-
-			"user_login"		=> $this->login,
-			"user_pass1"		=> $this->pass,
-			"user_email"		=> "",
-			"user_firstname"	=> "",
-			"user_lastname"		=> "",
-			"import_local" 		=> true,
+    public function setPass($pass)
+    {
+        $this->pass = $pass;
+    }
 
 
-		);
+    public function toArray()
+    {
 
-		return array_merge($this->taoDbConfig->toArray(),$this->generisConfig->toArray(),$returnValue);
-	}
+        $returnValue = array(
+
+            "user_login"     => $this->login,
+            "user_pass1"     => $this->pass,
+            "user_email"     => "",
+            "user_firstname" => "",
+            "user_lastname"  => "",
+            "import_local"   => true,
+
+
+        );
+
+        return array_merge($this->taoDbConfig->toArray(), $this->generisConfig->toArray(), $returnValue);
+    }
 }
