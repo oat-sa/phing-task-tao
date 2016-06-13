@@ -55,7 +55,7 @@ class CreateDbTask extends Task
                 break;
             case 'pdo_mysql':
 
-                $command = vsprintf("echo 'create database %s  | mysql -u%s -p%s",
+                $command = vsprintf("echo 'create database %s ' | mysql -u%s -p%s",
                     [
                         $this->taoDbConfig->getDbName(),
                         $this->taoDbConfig->getDbUser(),
