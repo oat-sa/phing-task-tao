@@ -154,13 +154,25 @@ class TaoDbConfig extends DataType
     public function getDbName(Project $p = null)
     {
         if ($this->isReference()) {
-            return $this->getRef($this->getProject())->getDbName($p);
+            return $this->normalizeString($this->getRef($this->getProject())->getDbName($p));
         }
         if ($this->taoInstalled) {
             $this->setDbName($this->getParams()['dbname']);
         }
 
-        return $this->dbName;
+        return $this->normalizeString($this->dbName);
+    }
+
+    /**
+     * 
+     * 
+     */
+    private function normalizeString($str = '') 
+    {
+        $str = strtolower($str);
+        $str= preg_replace('/[^a-z0-9 _]+/', '', $str);
+        echo 'str : ' . $str;
+        return $str;
     }
 
     /**
