@@ -171,7 +171,6 @@ class TaoDbConfig extends DataType
     {
         $str = strtolower($str);
         $str= preg_replace('/[^a-z0-9 _]+/', '', $str);
-        echo 'str : ' . $str;
         return $str;
     }
 
