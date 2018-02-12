@@ -9,6 +9,8 @@ class InstallTaoTask extends Task {
      * The message passed in the buildfile.
      */
     private $taoPath;
+
+    /** @var TaoConfig */
     private $taoConfig;
 
     /**
@@ -37,24 +39,23 @@ class InstallTaoTask extends Task {
     	$this->install();
     }
 
-    private function install(){
-
-       $installPath = $this->taoPath. '/tao/install/init.php';
+    private function install()
+    {
+        $installPath = $this->taoPath. '/tao/install/init.php';
         if (!is_file($installPath)) {
     		throw new Exception("InstallTaoTask require a tao package install should be found ".$installPath);
     	}
     	require_once $installPath;
 
+        $pathConfig = [
+            'root_path' => $this->taoPath . '/',
+            'install_path' => $this->taoPath . '/tao/install/',
+        ];
 
+        // Running the service.
+        $container->offsetSet(tao_scripts_TaoInstall::CONTAINER_INDEX, $pathConfig);
+        $options = ['argv' => $this->taoConfig->toArray()];
 
-		$installator = new tao_install_Installator( 
-			array(
-				'root_path' 	=> $this->taoPath . '/',
-				'install_path'	=> $this->taoPath .'/tao/install/'
-			)
-		);
-
-		$installator->escapeCheck('custom_tao_ModRewrite');
-		$installator->install($this->taoConfig->toArray());
+        $installer = new tao_scripts_TaoInstall($container, $options);
     }
 }
