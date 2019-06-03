@@ -35,14 +35,14 @@ class TaoDbConfig extends DataType
 
         require_once $path;
 
+        //this was changed after switch to DBAL - with this code, DB backup phing task would be usable on both PDO and DBAL
         if ( ! $this->params) {
             $persistence   = \common_persistence_Manager::getPersistence('default');
-            $schemaManager = $persistence->getDriver()->getSchemaManager();
 
-            $reflectionMethod = (new ReflectionMethod(get_class($schemaManager), 'getDriver'));
-            $reflectionMethod->setAccessible(true);
-            $this->params = $reflectionMethod->invoke($schemaManager)->getParams();
+            $refl = (new ReflectionMethod(get_class($persistence), 'getParams'));
+            $refl->setAccessible(true);
 
+            $this->params = $refl->invoke($persistence);
         }
 
 
