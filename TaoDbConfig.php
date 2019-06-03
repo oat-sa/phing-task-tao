@@ -42,7 +42,12 @@ class TaoDbConfig extends DataType
             $refl = (new ReflectionMethod(get_class($persistence), 'getParams'));
             $refl->setAccessible(true);
 
-            $this->params = $refl->invoke($persistence);
+            $params = $refl->invoke($persistence);
+            if (array_key_exists('connection', $params) && !empty($params['connection'])) {
+                $this->params = $params['connection'];
+            } else {
+                $this->params = $params;
+            }
         }
 
 
