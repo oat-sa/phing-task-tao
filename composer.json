@@ -1,5 +1,6 @@
 {
     "name": "oat-sa/phing-task-tao",
+    "abandoned": true,
     "license" : "GPL-2.0",
     "support": {
         "issues": "http://forge.taotesting.com",
